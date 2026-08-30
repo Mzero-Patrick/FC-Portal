@@ -20,7 +20,7 @@ function ResultCard({ result }: { result: MatchResult }) {
         : "bg-loss/15 text-loss";
 
   return (
-    <article className="w-[280px] shrink-0 snap-start rounded-xl border border-border bg-card p-5 shadow-sm transition-shadow hover:shadow-md">
+    <article className="w-[320px] shrink-0 snap-start rounded-xl border border-border bg-card p-5 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-center justify-between gap-2 text-xs">
         <span className="font-bold uppercase tracking-wide text-primary">
           {result.competition}
@@ -70,7 +70,7 @@ function FixtureCard({ fixture }: { fixture: Fixture }) {
   const home = fixture.home === clubName;
 
   return (
-    <article className="flex w-[280px] shrink-0 snap-start flex-col rounded-xl border border-border bg-card p-5 shadow-sm transition-shadow hover:shadow-md">
+    <article className="flex w-[320px] shrink-0 snap-start flex-col rounded-xl border border-border bg-card p-5 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-center justify-between gap-2 text-xs">
         <span className="font-bold uppercase tracking-wide text-primary">
           {fixture.competition}
