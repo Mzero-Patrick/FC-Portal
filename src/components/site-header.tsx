@@ -11,22 +11,20 @@ import {
   Youtube,
 } from "lucide-react";
 
-const primaryNav = [
+const primaryNav: { label: string; href: string; external?: boolean }[] = [
   { label: "Home", href: "#top" },
   { label: "Teams", href: "#teams" },
   { label: "Matches & Fixtures", href: "#match-center" },
   { label: "News", href: "#news" },
   { label: "Tickets & Hospitality", href: "#tickets" },
+  {
+    label: "Rayon Plus",
+    href: "https://www.rayonplus.rw/",
+    external: true,
+  },
 ];
 
-const moreNav = [
-  "Club History",
-  "Academy",
-  "Women's Team",
-  "Stadium Tours",
-  "Foundation",
-  "Careers",
-];
+const moreNav = ["About the Club", "Fans", "Our History"];
 
 const topBarLinks = ["Club Charter", "Contact Us", "Shop", "My Account"];
 
