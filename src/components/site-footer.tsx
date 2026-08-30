@@ -6,13 +6,7 @@ import {
   Youtube,
 } from "lucide-react";
 
-const usefulLinks = [
-  "Teams",
-  "Fixtures & Results",
-  "Tickets & Hospitality",
-  "Club Shop",
-  "Matchday Programme",
-];
+const usefulLinks = ["Official App", "FAQs", "Contact Us", "Website Feedback"];
 
 const clubLinks = [
   "Club History",

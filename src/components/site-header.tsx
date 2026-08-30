@@ -11,22 +11,20 @@ import {
   Youtube,
 } from "lucide-react";
 
-const primaryNav = [
+const primaryNav: { label: string; href: string; external?: boolean }[] = [
   { label: "Home", href: "#top" },
   { label: "Teams", href: "#teams" },
   { label: "Matches & Fixtures", href: "#match-center" },
   { label: "News", href: "#news" },
   { label: "Tickets & Hospitality", href: "#tickets" },
+  {
+    label: "Rayon Plus",
+    href: "https://www.rayonplus.rw/",
+    external: true,
+  },
 ];
 
-const moreNav = [
-  "Club History",
-  "Academy",
-  "Women's Team",
-  "Stadium Tours",
-  "Foundation",
-  "Careers",
-];
+const moreNav = ["About the Club", "Fans", "Our History"];
 
 const topBarLinks = ["Club Charter", "Contact Us", "Shop", "My Account"];
 
@@ -109,6 +107,9 @@ export function SiteHeader() {
               <a
                 key={item.label}
                 href={item.href}
+                {...(item.external
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 className="border-b-2 border-transparent px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-primary"
               >
                 {item.label}
@@ -172,6 +173,9 @@ export function SiteHeader() {
               <a
                 key={item.label}
                 href={item.href}
+                {...(item.external
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 onClick={() => setMobileOpen(false)}
                 className="block border-b border-border/60 py-3 text-sm font-semibold text-foreground"
               >
