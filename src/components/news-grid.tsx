@@ -43,7 +43,10 @@ export function NewsGrid() {
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {newsItems.map((item) => {
-            const image = images[item.id];
+            const image = images[item.id] ?? {
+              src: newsCelebration,
+              alt: item.title,
+            };
             return (
               <article
                 key={item.id}
