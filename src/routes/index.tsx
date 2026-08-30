@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Hero } from "@/components/hero";
 import { MatchCenter } from "@/components/match-center";
 import { NewsGrid } from "@/components/news-grid";
+import { SponsorBanner } from "@/components/sponsor-banner";
 import { SiteFooter } from "@/components/site-footer";
 
 export const Route = createFileRoute("/")({
@@ -41,6 +42,7 @@ function Index() {
         <MatchCenter />
         <NewsGrid />
       </main>
+      <SponsorBanner />
       <SiteFooter />
     </div>
   );

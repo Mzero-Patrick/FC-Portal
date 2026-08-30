@@ -107,6 +107,9 @@ export function SiteHeader() {
               <a
                 key={item.label}
                 href={item.href}
+                {...(item.external
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 className="border-b-2 border-transparent px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-primary"
               >
                 {item.label}
@@ -170,6 +173,9 @@ export function SiteHeader() {
               <a
                 key={item.label}
                 href={item.href}
+                {...(item.external
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 onClick={() => setMobileOpen(false)}
                 className="block border-b border-border/60 py-3 text-sm font-semibold text-foreground"
               >
