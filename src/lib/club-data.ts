@@ -151,3 +151,27 @@ export const newsItems: NewsItem[] = [
       "An unbeaten run across four fixtures secured silverware and momentum ahead of the new league season.",
   },
 ];
+
+export type StandingRow = {
+  pos: number;
+  team: string;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  gf: number;
+  ga: number;
+  gd: number;
+  points: number;
+};
+
+export const leagueStandings: StandingRow[] = [
+  { pos: 1, team: clubName, played: 3, won: 2, drawn: 1, lost: 0, gf: 6, ga: 2, gd: 4, points: 7 },
+  { pos: 2, team: "Harbour City", played: 3, won: 2, drawn: 0, lost: 1, gf: 5, ga: 3, gd: 2, points: 6 },
+  { pos: 3, team: "Northgate United", played: 3, won: 1, drawn: 2, lost: 0, gf: 4, ga: 3, gd: 1, points: 5 },
+  { pos: 4, team: "Riverside Rovers", played: 3, won: 1, drawn: 1, lost: 1, gf: 4, ga: 5, gd: -1, points: 4 },
+  { pos: 5, team: "Eastfield Wanderers", played: 3, won: 1, drawn: 0, lost: 2, gf: 3, ga: 4, gd: -1, points: 3 },
+  { pos: 6, team: "Old Ferry Rovers", played: 3, won: 0, drawn: 2, lost: 1, gf: 2, ga: 3, gd: -1, points: 2 },
+  { pos: 7, team: "Westmount FC", played: 3, won: 0, drawn: 1, lost: 2, gf: 1, ga: 4, gd: -3, points: 1 },
+  { pos: 8, team: "Brackwell Town", played: 3, won: 0, drawn: 1, lost: 2, gf: 2, ga: 6, gd: -4, points: 1 },
+];
