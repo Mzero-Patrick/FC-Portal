@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import {
   ChevronDown,
+  ChevronRight,
   Facebook,
   Instagram,
   Menu,
@@ -11,10 +13,10 @@ import {
   Youtube,
 } from "lucide-react";
 
-const primaryNav: { label: string; href: string; external?: boolean }[] = [
+type NavLink = { label: string; href: string; external?: boolean };
+
+const primaryNav: NavLink[] = [
   { label: "Home", href: "#top" },
-  { label: "Teams", href: "#teams" },
-  { label: "Matches & Fixtures", href: "#match-center" },
   { label: "News", href: "#news" },
   { label: "Tickets & Hospitality", href: "#tickets" },
   {
@@ -22,6 +24,31 @@ const primaryNav: { label: string; href: string; external?: boolean }[] = [
     href: "https://www.rayonplus.rw/",
     external: true,
   },
+];
+
+type TeamsEntry =
+  | { label: string; to: "/matches" }
+  | { label: string; children: { label: string; to: "/matches" }[] };
+
+const teamsNav: TeamsEntry[] = [
+  { label: "Men's Team", to: "/matches" },
+  { label: "Women's Team", to: "/matches" },
+  {
+    label: "Junior Teams",
+    children: [
+      { label: "Men U20 Team", to: "/matches" },
+      { label: "Men U17 Team", to: "/matches" },
+    ],
+  },
+  {
+    label: "Players Profile",
+    children: [
+      { label: "Men", to: "/matches" },
+      { label: "Women", to: "/matches" },
+      { label: "Juniors", to: "/matches" },
+    ],
+  },
+  { label: "Fixtures & Standings", to: "/matches" },
 ];
 
 const moreNav = ["About the Club", "Fans", "Our History"];
@@ -42,6 +69,7 @@ function Crest({ className = "h-10 w-10" }: { className?: string }) {
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
+  const [mobileTeamsOpen, setMobileTeamsOpen] = useState(false);
 
   return (
     <header id="top" className="sticky top-0 z-50">
@@ -103,7 +131,63 @@ export function SiteHeader() {
             className="hidden items-center gap-1 lg:flex"
             aria-label="Primary"
           >
-            {primaryNav.map((item) => (
+            {primaryNav.slice(0, 1).map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="border-b-2 border-transparent px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-primary"
+              >
+                {item.label}
+              </a>
+            ))}
+
+            {/* Teams dropdown */}
+            <div className="group relative">
+              <button
+                type="button"
+                className="flex items-center gap-1 border-b-2 border-transparent px-3 py-2 text-sm font-semibold text-foreground transition-colors group-hover:border-gold group-hover:text-primary"
+                aria-haspopup="true"
+              >
+                Teams
+                <ChevronDown
+                  size={16}
+                  className="transition-transform group-hover:rotate-180"
+                />
+              </button>
+              <div className="invisible absolute left-0 top-full z-50 w-56 translate-y-1 rounded-lg border border-border bg-popover py-2 opacity-0 shadow-lg transition-all group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                {teamsNav.map((entry) =>
+                  "children" in entry ? (
+                    <div key={entry.label} className="group/sub relative">
+                      <span className="flex cursor-default items-center justify-between px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary">
+                        {entry.label}
+                        <ChevronRight size={14} />
+                      </span>
+                      <div className="invisible absolute left-full top-0 z-50 w-48 -translate-x-1 rounded-lg border border-border bg-popover py-2 opacity-0 shadow-lg transition-all group-hover/sub:visible group-hover/sub:translate-x-0 group-hover/sub:opacity-100">
+                        {entry.children.map((child) => (
+                          <Link
+                            key={child.label}
+                            to="/matches"
+                            className="block px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      key={entry.label}
+                      to={entry.to}
+                      className="block px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary"
+                    >
+                      {entry.label}
+                    </Link>
+                  ),
+                )}
+              </div>
+            </div>
+
+            {primaryNav.slice(1).map((item) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -169,7 +253,66 @@ export function SiteHeader() {
             className="border-t border-border bg-card px-4 pb-4 pt-2 lg:hidden"
             aria-label="Mobile"
           >
-            {primaryNav.map((item) => (
+            {primaryNav.slice(0, 1).map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="block border-b border-border/60 py-3 text-sm font-semibold text-foreground"
+              >
+                {item.label}
+              </a>
+            ))}
+
+            {/* Teams accordion */}
+            <button
+              type="button"
+              className="flex w-full items-center justify-between border-b border-border/60 py-3 text-sm font-semibold text-foreground"
+              onClick={() => setMobileTeamsOpen((v) => !v)}
+              aria-expanded={mobileTeamsOpen}
+            >
+              Teams
+              <ChevronDown
+                size={16}
+                className={mobileTeamsOpen ? "rotate-180 transition-transform" : "transition-transform"}
+              />
+            </button>
+            {mobileTeamsOpen && (
+              <div className="py-1 pl-4">
+                {teamsNav.map((entry) =>
+                  "children" in entry ? (
+                    <div key={entry.label} className="py-1">
+                      <span className="block py-1 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                        {entry.label}
+                      </span>
+                      <div className="pl-3">
+                        {entry.children.map((child) => (
+                          <Link
+                            key={child.label}
+                            to="/matches"
+                            onClick={() => setMobileOpen(false)}
+                            className="block py-2 text-sm font-medium text-muted-foreground"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      key={entry.label}
+                      to={entry.to}
+                      onClick={() => setMobileOpen(false)}
+                      className="block py-2 text-sm font-medium text-muted-foreground"
+                    >
+                      {entry.label}
+                    </Link>
+                  ),
+                )}
+              </div>
+            )}
+
+            {primaryNav.slice(1).map((item) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -182,6 +325,7 @@ export function SiteHeader() {
                 {item.label}
               </a>
             ))}
+
             <button
               type="button"
               className="flex w-full items-center justify-between border-b border-border/60 py-3 text-sm font-semibold text-foreground"
