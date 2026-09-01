@@ -295,16 +295,13 @@ export function SiteHeader() {
             className="border-t border-border bg-card px-4 pb-4 pt-2 lg:hidden"
             aria-label="Mobile"
           >
-            {primaryNav.slice(0, 1).map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className="block border-b border-border/60 py-3 text-sm font-semibold text-foreground"
-              >
-                {item.label}
-              </a>
-            ))}
+            <Link
+              to="/"
+              onClick={() => setMobileOpen(false)}
+              className="block border-b border-border/60 py-3 text-sm font-semibold text-foreground"
+            >
+              Home
+            </Link>
 
             {/* Teams accordion */}
             <button
@@ -331,7 +328,7 @@ export function SiteHeader() {
                         {entry.children.map((child) => (
                           <Link
                             key={child.label}
-                            to="/matches"
+                            to={child.to}
                             onClick={() => setMobileOpen(false)}
                             className="block py-2 text-sm font-medium text-muted-foreground"
                           >
@@ -354,7 +351,7 @@ export function SiteHeader() {
               </div>
             )}
 
-            {primaryNav.slice(1).map((item) => (
+            {primaryNav.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -382,18 +379,39 @@ export function SiteHeader() {
             </button>
             {mobileMoreOpen && (
               <div className="py-1 pl-4">
-                {moreNav.map((label) => (
-                  <a
-                    key={label}
-                    href="#"
-                    onClick={() => setMobileOpen(false)}
-                    className="block py-2 text-sm font-medium text-muted-foreground"
-                  >
-                    {label}
-                  </a>
-                ))}
+                {moreNav.map((entry) =>
+                  "children" in entry ? (
+                    <div key={entry.label} className="py-1">
+                      <span className="block py-1 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                        {entry.label}
+                      </span>
+                      <div className="pl-3">
+                        {entry.children.map((child) => (
+                          <Link
+                            key={child.label}
+                            to={child.to}
+                            onClick={() => setMobileOpen(false)}
+                            className="block py-2 text-sm font-medium text-muted-foreground"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      key={entry.label}
+                      to={entry.to}
+                      onClick={() => setMobileOpen(false)}
+                      className="block py-2 text-sm font-medium text-muted-foreground"
+                    >
+                      {entry.label}
+                    </Link>
+                  ),
+                )}
               </div>
             )}
+
             <a
               href="#tickets"
               onClick={() => setMobileOpen(false)}
