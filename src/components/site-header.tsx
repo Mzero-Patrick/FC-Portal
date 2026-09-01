@@ -134,7 +134,7 @@ export function SiteHeader() {
       <div className="border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/90">
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:flex sm:justify-between">
           {/* Logo placeholder */}
-          <a href="#top" className="flex min-w-0 items-center gap-3">
+          <Link to="/" className="flex min-w-0 items-center gap-3">
             <Crest />
             <div className="min-w-0 leading-none">
               <div className="truncate font-display text-2xl font-bold uppercase tracking-wide text-foreground">
@@ -144,22 +144,22 @@ export function SiteHeader() {
                 Football Club
               </div>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop nav */}
           <nav
             className="hidden items-center gap-1 lg:flex"
             aria-label="Primary"
           >
-            {primaryNav.slice(0, 1).map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="border-b-2 border-transparent px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-primary"
-              >
-                {item.label}
-              </a>
-            ))}
+            <Link
+              to="/"
+              activeOptions={{ exact: true }}
+              activeProps={{ className: "border-gold text-primary" }}
+              className="border-b-2 border-transparent px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-primary"
+            >
+              Home
+            </Link>
+
 
             {/* Teams dropdown */}
             <div className="group relative">
