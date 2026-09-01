@@ -186,12 +186,13 @@ export function SiteHeader() {
                         {entry.children.map((child) => (
                           <Link
                             key={child.label}
-                            to="/matches"
+                            to={child.to}
                             className="block px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary"
                           >
                             {child.label}
                           </Link>
                         ))}
+
                       </div>
                     </div>
                   ) : (
