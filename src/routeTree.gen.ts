@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as HistoryRouteImport } from './routes/history'
 import { Route as MatchesRouteImport } from './routes/matches'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as TeamsJuniorsRouteImport } from './routes/teams.juniors'
@@ -37,6 +38,11 @@ const CareersRoute = CareersRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MatchesRoute = MatchesRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/history': typeof HistoryRoute
   '/matches': typeof MatchesRoute
   '/partners': typeof PartnersRoute
   '/teams/juniors': typeof TeamsJuniorsRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/history': typeof HistoryRoute
   '/matches': typeof MatchesRoute
   '/partners': typeof PartnersRoute
   '/teams/juniors': typeof TeamsJuniorsRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
+  '/history': typeof HistoryRoute
   '/matches': typeof MatchesRoute
   '/partners': typeof PartnersRoute
   '/teams/juniors': typeof TeamsJuniorsRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/careers'
     | '/contact'
+    | '/history'
     | '/matches'
     | '/partners'
     | '/teams/juniors'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/careers'
     | '/contact'
+    | '/history'
     | '/matches'
     | '/partners'
     | '/teams/juniors'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/careers'
     | '/contact'
+    | '/history'
     | '/matches'
     | '/partners'
     | '/teams/juniors'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
+  HistoryRoute: typeof HistoryRoute
   MatchesRoute: typeof MatchesRoute
   PartnersRoute: typeof PartnersRoute
   TeamsJuniorsRoute: typeof TeamsJuniorsRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/matches': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
+  HistoryRoute: HistoryRoute,
   MatchesRoute: MatchesRoute,
   PartnersRoute: PartnersRoute,
   TeamsJuniorsRoute: TeamsJuniorsRoute,
