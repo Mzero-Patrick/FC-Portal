@@ -16,9 +16,8 @@ import {
 type NavLink = { label: string; href: string; external?: boolean };
 
 const primaryNav: NavLink[] = [
-  { label: "Home", href: "#top" },
-  { label: "News", href: "#news" },
-  { label: "Tickets & Hospitality", href: "#tickets" },
+  { label: "News", href: "/#news" },
+  { label: "Tickets & Hospitality", href: "/#tickets" },
   {
     label: "Rayon Plus",
     href: "https://www.rayonplus.rw/",
@@ -26,34 +25,55 @@ const primaryNav: NavLink[] = [
   },
 ];
 
+type TeamRoute = "/teams/men" | "/teams/women" | "/teams/juniors" | "/matches";
+
 type TeamsEntry =
-  | { label: string; to: "/matches" }
-  | { label: string; children: { label: string; to: "/matches" }[] };
+  | { label: string; to: TeamRoute }
+  | { label: string; children: { label: string; to: TeamRoute }[] };
 
 const teamsNav: TeamsEntry[] = [
-  { label: "Men's Team", to: "/matches" },
-  { label: "Women's Team", to: "/matches" },
+  { label: "Men's Team", to: "/teams/men" },
+  { label: "Women's Team", to: "/teams/women" },
   {
     label: "Junior Teams",
     children: [
-      { label: "Men U20 Team", to: "/matches" },
-      { label: "Men U17 Team", to: "/matches" },
+      { label: "Men U20 Team", to: "/teams/juniors" },
+      { label: "Men U17 Team", to: "/teams/juniors" },
     ],
   },
   {
     label: "Players Profile",
     children: [
-      { label: "Men", to: "/matches" },
-      { label: "Women", to: "/matches" },
-      { label: "Juniors", to: "/matches" },
+      { label: "Men", to: "/teams/men" },
+      { label: "Women", to: "/teams/women" },
+      { label: "Juniors", to: "/teams/juniors" },
     ],
   },
   { label: "Fixtures & Standings", to: "/matches" },
 ];
 
-const moreNav = ["About the Club", "Fans", "Our History"];
+type MoreRoute = "/about" | "/partners" | "/careers" | "/contact" | "/fans" | "/history";
+
+type MoreEntry =
+  | { label: string; to: MoreRoute }
+  | { label: string; children: { label: string; to: MoreRoute }[] };
+
+const moreNav: MoreEntry[] = [
+  {
+    label: "About the Club",
+    children: [
+      { label: "About Rayon Sports", to: "/about" },
+      { label: "Club Partners", to: "/partners" },
+      { label: "Careers", to: "/careers" },
+      { label: "Contact Us", to: "/contact" },
+    ],
+  },
+  { label: "Fans", to: "/fans" },
+  { label: "Our History", to: "/history" },
+];
 
 const topBarLinks = ["Club Charter", "Contact Us", "Shop", "My Account"];
+
 
 function Crest({ className = "h-10 w-10" }: { className?: string }) {
   return (
@@ -114,7 +134,7 @@ export function SiteHeader() {
       <div className="border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/90">
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:flex sm:justify-between">
           {/* Logo placeholder */}
-          <a href="#top" className="flex min-w-0 items-center gap-3">
+          <Link to="/" className="flex min-w-0 items-center gap-3">
             <Crest />
             <div className="min-w-0 leading-none">
               <div className="truncate font-display text-2xl font-bold uppercase tracking-wide text-foreground">
@@ -124,22 +144,22 @@ export function SiteHeader() {
                 Football Club
               </div>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop nav */}
           <nav
             className="hidden items-center gap-1 lg:flex"
             aria-label="Primary"
           >
-            {primaryNav.slice(0, 1).map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="border-b-2 border-transparent px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-primary"
-              >
-                {item.label}
-              </a>
-            ))}
+            <Link
+              to="/"
+              activeOptions={{ exact: true }}
+              activeProps={{ className: "border-gold text-primary" }}
+              className="border-b-2 border-transparent px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-primary"
+            >
+              Home
+            </Link>
+
 
             {/* Teams dropdown */}
             <div className="group relative">
@@ -166,12 +186,13 @@ export function SiteHeader() {
                         {entry.children.map((child) => (
                           <Link
                             key={child.label}
-                            to="/matches"
+                            to={child.to}
                             className="block px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary"
                           >
                             {child.label}
                           </Link>
                         ))}
+
                       </div>
                     </div>
                   ) : (
@@ -187,7 +208,7 @@ export function SiteHeader() {
               </div>
             </div>
 
-            {primaryNav.slice(1).map((item) => (
+            {primaryNav.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -213,18 +234,39 @@ export function SiteHeader() {
                   className="transition-transform group-hover:rotate-180"
                 />
               </button>
-              <div className="invisible absolute right-0 top-full z-50 w-52 translate-y-1 rounded-lg border border-border bg-popover py-2 opacity-0 shadow-lg transition-all group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                {moreNav.map((label) => (
-                  <a
-                    key={label}
-                    href="#"
-                    className="block px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary"
-                  >
-                    {label}
-                  </a>
-                ))}
+              <div className="invisible absolute right-0 top-full z-50 w-56 translate-y-1 rounded-lg border border-border bg-popover py-2 opacity-0 shadow-lg transition-all group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                {moreNav.map((entry) =>
+                  "children" in entry ? (
+                    <div key={entry.label} className="group/sub relative">
+                      <span className="flex cursor-default items-center justify-between px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary">
+                        {entry.label}
+                        <ChevronRight size={14} />
+                      </span>
+                      <div className="invisible absolute right-full top-0 z-50 w-52 translate-x-1 rounded-lg border border-border bg-popover py-2 opacity-0 shadow-lg transition-all group-hover/sub:visible group-hover/sub:translate-x-0 group-hover/sub:opacity-100">
+                        {entry.children.map((child) => (
+                          <Link
+                            key={child.label}
+                            to={child.to}
+                            className="block px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      key={entry.label}
+                      to={entry.to}
+                      className="block px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary"
+                    >
+                      {entry.label}
+                    </Link>
+                  ),
+                )}
               </div>
             </div>
+
           </nav>
 
           <div className="flex items-center gap-2">
@@ -253,16 +295,13 @@ export function SiteHeader() {
             className="border-t border-border bg-card px-4 pb-4 pt-2 lg:hidden"
             aria-label="Mobile"
           >
-            {primaryNav.slice(0, 1).map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className="block border-b border-border/60 py-3 text-sm font-semibold text-foreground"
-              >
-                {item.label}
-              </a>
-            ))}
+            <Link
+              to="/"
+              onClick={() => setMobileOpen(false)}
+              className="block border-b border-border/60 py-3 text-sm font-semibold text-foreground"
+            >
+              Home
+            </Link>
 
             {/* Teams accordion */}
             <button
@@ -289,7 +328,7 @@ export function SiteHeader() {
                         {entry.children.map((child) => (
                           <Link
                             key={child.label}
-                            to="/matches"
+                            to={child.to}
                             onClick={() => setMobileOpen(false)}
                             className="block py-2 text-sm font-medium text-muted-foreground"
                           >
@@ -312,7 +351,7 @@ export function SiteHeader() {
               </div>
             )}
 
-            {primaryNav.slice(1).map((item) => (
+            {primaryNav.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -340,18 +379,39 @@ export function SiteHeader() {
             </button>
             {mobileMoreOpen && (
               <div className="py-1 pl-4">
-                {moreNav.map((label) => (
-                  <a
-                    key={label}
-                    href="#"
-                    onClick={() => setMobileOpen(false)}
-                    className="block py-2 text-sm font-medium text-muted-foreground"
-                  >
-                    {label}
-                  </a>
-                ))}
+                {moreNav.map((entry) =>
+                  "children" in entry ? (
+                    <div key={entry.label} className="py-1">
+                      <span className="block py-1 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                        {entry.label}
+                      </span>
+                      <div className="pl-3">
+                        {entry.children.map((child) => (
+                          <Link
+                            key={child.label}
+                            to={child.to}
+                            onClick={() => setMobileOpen(false)}
+                            className="block py-2 text-sm font-medium text-muted-foreground"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      key={entry.label}
+                      to={entry.to}
+                      onClick={() => setMobileOpen(false)}
+                      className="block py-2 text-sm font-medium text-muted-foreground"
+                    >
+                      {entry.label}
+                    </Link>
+                  ),
+                )}
               </div>
             )}
+
             <a
               href="#tickets"
               onClick={() => setMobileOpen(false)}
