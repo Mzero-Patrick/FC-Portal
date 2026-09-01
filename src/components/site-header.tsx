@@ -16,9 +16,8 @@ import {
 type NavLink = { label: string; href: string; external?: boolean };
 
 const primaryNav: NavLink[] = [
-  { label: "Home", href: "#top" },
-  { label: "News", href: "#news" },
-  { label: "Tickets & Hospitality", href: "#tickets" },
+  { label: "News", href: "/#news" },
+  { label: "Tickets & Hospitality", href: "/#tickets" },
   {
     label: "Rayon Plus",
     href: "https://www.rayonplus.rw/",
@@ -26,34 +25,55 @@ const primaryNav: NavLink[] = [
   },
 ];
 
+type TeamRoute = "/teams/men" | "/teams/women" | "/teams/juniors" | "/matches";
+
 type TeamsEntry =
-  | { label: string; to: "/matches" }
-  | { label: string; children: { label: string; to: "/matches" }[] };
+  | { label: string; to: TeamRoute }
+  | { label: string; children: { label: string; to: TeamRoute }[] };
 
 const teamsNav: TeamsEntry[] = [
-  { label: "Men's Team", to: "/matches" },
-  { label: "Women's Team", to: "/matches" },
+  { label: "Men's Team", to: "/teams/men" },
+  { label: "Women's Team", to: "/teams/women" },
   {
     label: "Junior Teams",
     children: [
-      { label: "Men U20 Team", to: "/matches" },
-      { label: "Men U17 Team", to: "/matches" },
+      { label: "Men U20 Team", to: "/teams/juniors" },
+      { label: "Men U17 Team", to: "/teams/juniors" },
     ],
   },
   {
     label: "Players Profile",
     children: [
-      { label: "Men", to: "/matches" },
-      { label: "Women", to: "/matches" },
-      { label: "Juniors", to: "/matches" },
+      { label: "Men", to: "/teams/men" },
+      { label: "Women", to: "/teams/women" },
+      { label: "Juniors", to: "/teams/juniors" },
     ],
   },
   { label: "Fixtures & Standings", to: "/matches" },
 ];
 
-const moreNav = ["About the Club", "Fans", "Our History"];
+type MoreRoute = "/about" | "/partners" | "/careers" | "/contact" | "/fans" | "/history";
+
+type MoreEntry =
+  | { label: string; to: MoreRoute }
+  | { label: string; children: { label: string; to: MoreRoute }[] };
+
+const moreNav: MoreEntry[] = [
+  {
+    label: "About the Club",
+    children: [
+      { label: "About Rayon Sports", to: "/about" },
+      { label: "Club Partners", to: "/partners" },
+      { label: "Careers", to: "/careers" },
+      { label: "Contact Us", to: "/contact" },
+    ],
+  },
+  { label: "Fans", to: "/fans" },
+  { label: "Our History", to: "/history" },
+];
 
 const topBarLinks = ["Club Charter", "Contact Us", "Shop", "My Account"];
+
 
 function Crest({ className = "h-10 w-10" }: { className?: string }) {
   return (
