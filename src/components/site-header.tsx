@@ -208,7 +208,7 @@ export function SiteHeader() {
               </div>
             </div>
 
-            {primaryNav.slice(1).map((item) => (
+            {primaryNav.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -234,18 +234,39 @@ export function SiteHeader() {
                   className="transition-transform group-hover:rotate-180"
                 />
               </button>
-              <div className="invisible absolute right-0 top-full z-50 w-52 translate-y-1 rounded-lg border border-border bg-popover py-2 opacity-0 shadow-lg transition-all group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                {moreNav.map((label) => (
-                  <a
-                    key={label}
-                    href="#"
-                    className="block px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary"
-                  >
-                    {label}
-                  </a>
-                ))}
+              <div className="invisible absolute right-0 top-full z-50 w-56 translate-y-1 rounded-lg border border-border bg-popover py-2 opacity-0 shadow-lg transition-all group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                {moreNav.map((entry) =>
+                  "children" in entry ? (
+                    <div key={entry.label} className="group/sub relative">
+                      <span className="flex cursor-default items-center justify-between px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary">
+                        {entry.label}
+                        <ChevronRight size={14} />
+                      </span>
+                      <div className="invisible absolute right-full top-0 z-50 w-52 translate-x-1 rounded-lg border border-border bg-popover py-2 opacity-0 shadow-lg transition-all group-hover/sub:visible group-hover/sub:translate-x-0 group-hover/sub:opacity-100">
+                        {entry.children.map((child) => (
+                          <Link
+                            key={child.label}
+                            to={child.to}
+                            className="block px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      key={entry.label}
+                      to={entry.to}
+                      className="block px-4 py-2 text-sm font-medium text-popover-foreground transition-colors hover:bg-secondary hover:text-primary"
+                    >
+                      {entry.label}
+                    </Link>
+                  ),
+                )}
               </div>
             </div>
+
           </nav>
 
           <div className="flex items-center gap-2">
