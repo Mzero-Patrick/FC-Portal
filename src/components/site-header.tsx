@@ -431,6 +431,25 @@ export function SiteHeader() {
               <Ticket size={16} />
               Buy Tickets
             </a>
+
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <Link
+                to="/auth"
+                search={{ mode: "login" }}
+                onClick={() => setMobileOpen(false)}
+                className="rounded-md border border-border py-3 text-center text-sm font-semibold text-foreground"
+              >
+                Login
+              </Link>
+              <Link
+                to="/auth"
+                search={{ mode: "register" }}
+                onClick={() => setMobileOpen(false)}
+                className="rounded-md bg-navy-deep py-3 text-center text-sm font-semibold text-navy-foreground"
+              >
+                Register
+              </Link>
+            </div>
           </nav>
         )}
       </div>
