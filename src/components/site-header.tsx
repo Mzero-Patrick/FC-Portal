@@ -123,9 +123,20 @@ export function SiteHeader() {
               </a>
             </div>
             <span className="h-3 w-px bg-navy-foreground/20" />
-            <a href="#" className="text-navy-foreground/70 hover:text-gold">
-              Sign In
-            </a>
+            <Link
+              to="/auth"
+              search={{ mode: "login" }}
+              className="text-navy-foreground/70 hover:text-gold"
+            >
+              Login
+            </Link>
+            <Link
+              to="/auth"
+              search={{ mode: "register" }}
+              className="font-semibold text-gold hover:text-gold/80"
+            >
+              Register
+            </Link>
           </div>
         </div>
       </div>
@@ -420,6 +431,25 @@ export function SiteHeader() {
               <Ticket size={16} />
               Buy Tickets
             </a>
+
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <Link
+                to="/auth"
+                search={{ mode: "login" }}
+                onClick={() => setMobileOpen(false)}
+                className="rounded-md border border-border py-3 text-center text-sm font-semibold text-foreground"
+              >
+                Login
+              </Link>
+              <Link
+                to="/auth"
+                search={{ mode: "register" }}
+                onClick={() => setMobileOpen(false)}
+                className="rounded-md bg-navy-deep py-3 text-center text-sm font-semibold text-navy-foreground"
+              >
+                Register
+              </Link>
+            </div>
           </nav>
         )}
       </div>
