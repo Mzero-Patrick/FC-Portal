@@ -202,10 +202,12 @@ function StandingsTable() {
           <tr className="border-b border-border bg-secondary/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
             <th className="px-4 py-3 font-bold">#</th>
             <th className="px-4 py-3 font-bold">Team</th>
-            <th className="px-2 py-3 text-center font-bold">P</th>
+            <th className="px-2 py-3 text-center font-bold">MP</th>
             <th className="px-2 py-3 text-center font-bold">W</th>
             <th className="px-2 py-3 text-center font-bold">D</th>
             <th className="px-2 py-3 text-center font-bold">L</th>
+            <th className="px-2 py-3 text-center font-bold">GF</th>
+            <th className="px-2 py-3 text-center font-bold">GA</th>
             <th className="px-2 py-3 text-center font-bold">GD</th>
             <th className="px-4 py-3 text-center font-bold">Pts</th>
           </tr>
