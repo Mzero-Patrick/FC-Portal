@@ -123,9 +123,20 @@ export function SiteHeader() {
               </a>
             </div>
             <span className="h-3 w-px bg-navy-foreground/20" />
-            <a href="#" className="text-navy-foreground/70 hover:text-gold">
-              Sign In
-            </a>
+            <Link
+              to="/auth"
+              search={{ mode: "login" }}
+              className="text-navy-foreground/70 hover:text-gold"
+            >
+              Login
+            </Link>
+            <Link
+              to="/auth"
+              search={{ mode: "register" }}
+              className="font-semibold text-gold hover:text-gold/80"
+            >
+              Register
+            </Link>
           </div>
         </div>
       </div>
