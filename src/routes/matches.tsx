@@ -200,8 +200,8 @@ function StandingsTable() {
       <table className="w-full min-w-[560px] text-sm">
         <thead>
           <tr className="border-b border-border bg-secondary/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
-            <th className="px-4 py-3 font-bold">#</th>
-            <th className="px-4 py-3 font-bold">Team</th>
+            <th className="px-4 py-3 font-bold">Pos</th>
+            <th className="px-4 py-3 font-bold">Club</th>
             <th className="px-2 py-3 text-center font-bold">MP</th>
             <th className="px-2 py-3 text-center font-bold">W</th>
             <th className="px-2 py-3 text-center font-bold">D</th>
@@ -240,6 +240,8 @@ function StandingsTable() {
                 <td className="px-2 py-3 text-center">{row.won}</td>
                 <td className="px-2 py-3 text-center">{row.drawn}</td>
                 <td className="px-2 py-3 text-center">{row.lost}</td>
+                <td className="px-2 py-3 text-center">{row.gf}</td>
+                <td className="px-2 py-3 text-center">{row.ga}</td>
                 <td className="px-2 py-3 text-center">
                   {row.gd > 0 ? `+${row.gd}` : row.gd}
                 </td>
