@@ -149,7 +149,7 @@ export function SiteHeader() {
             <Crest />
             <div className="min-w-0 leading-none">
               <div className="truncate font-display text-2xl font-bold uppercase tracking-wide text-foreground">
-                Stamford Blues
+                Rayon Sports
               </div>
               <div className="text-[10px] font-bold uppercase tracking-[0.35em] text-primary">
                 Football Club

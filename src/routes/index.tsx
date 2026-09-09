@@ -10,21 +10,21 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title: "Stamford Blues FC | Official Site: News, Fixtures & Tickets",
+        title: "Rayon Sports FC | Official Site: News, Fixtures & Tickets",
       },
       {
         name: "description",
         content:
-          "Official home of Stamford Blues FC — latest club news, match results, upcoming fixtures, tickets and hospitality at The Bridge Stadium.",
+          "Official home of Rayon Sports FC — latest club news, match results, upcoming fixtures, tickets and hospitality at Amahoro Stadium.",
       },
       {
         property: "og:title",
-        content: "Stamford Blues FC | Official Site: News, Fixtures & Tickets",
+        content: "Rayon Sports FC | Official Site: News, Fixtures & Tickets",
       },
       {
         property: "og:description",
         content:
-          "Latest club news, match results, upcoming fixtures, tickets and hospitality at The Bridge Stadium.",
+          "Latest club news, match results, upcoming fixtures, tickets and hospitality at Amahoro Stadium.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
