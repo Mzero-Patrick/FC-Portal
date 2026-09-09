@@ -80,7 +80,7 @@ export function SiteFooter() {
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-navy-foreground/70">
             The official home of Rayon Sports FC. News, fixtures, tickets and
-            everything matchday at The Bridge Stadium.
+            everything matchday at Amahoro Stadium.
           </p>
           <div className="mt-5 flex items-center gap-2.5">
             {socials.map(({ label, icon: Icon }) => (
