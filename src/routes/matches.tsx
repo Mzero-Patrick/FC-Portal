@@ -24,20 +24,20 @@ const tabs: { id: Tab; label: string }[] = [
 export const Route = createFileRoute("/matches")({
   head: () => ({
     meta: [
-      { title: "Fixtures, Results & Standings | Stamford Blues FC" },
+      { title: "Fixtures, Results & Standings | Rayon Sports FC" },
       {
         name: "description",
         content:
-          "Stamford Blues FC fixtures, latest results and league standings — kick-off times, venues and match centre for every Blues team.",
+          "Rayon Sports FC fixtures, latest results and league standings — kick-off times, venues and match centre for every Blues team.",
       },
       {
         property: "og:title",
-        content: "Fixtures, Results & Standings | Stamford Blues FC",
+        content: "Fixtures, Results & Standings | Rayon Sports FC",
       },
       {
         property: "og:description",
         content:
-          "Kick-off times, venues, results and league standings for Stamford Blues FC.",
+          "Kick-off times, venues, results and league standings for Rayon Sports FC.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -200,8 +200,8 @@ function StandingsTable() {
       <table className="w-full min-w-[560px] text-sm">
         <thead>
           <tr className="border-b border-border bg-secondary/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
-            <th className="px-4 py-3 font-bold">#</th>
-            <th className="px-4 py-3 font-bold">Team</th>
+            <th className="px-4 py-3 font-bold">Pos</th>
+            <th className="px-4 py-3 font-bold">Club</th>
             <th className="px-2 py-3 text-center font-bold">MP</th>
             <th className="px-2 py-3 text-center font-bold">W</th>
             <th className="px-2 py-3 text-center font-bold">D</th>
@@ -240,6 +240,8 @@ function StandingsTable() {
                 <td className="px-2 py-3 text-center">{row.won}</td>
                 <td className="px-2 py-3 text-center">{row.drawn}</td>
                 <td className="px-2 py-3 text-center">{row.lost}</td>
+                <td className="px-2 py-3 text-center">{row.gf}</td>
+                <td className="px-2 py-3 text-center">{row.ga}</td>
                 <td className="px-2 py-3 text-center">
                   {row.gd > 0 ? `+${row.gd}` : row.gd}
                 </td>
@@ -266,7 +268,7 @@ function MatchesPage() {
         <section className="bg-navy-deep py-12 text-navy-foreground">
           <div className="mx-auto max-w-5xl px-4">
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
-              Stamford Blues FC
+              Rayon Sports FC
             </p>
             <h1 className="mt-1 font-display text-3xl font-bold uppercase tracking-wide sm:text-4xl">
               Fixtures &amp; Results

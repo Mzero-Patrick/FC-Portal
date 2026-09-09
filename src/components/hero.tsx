@@ -26,7 +26,7 @@ export function Hero() {
 
           <p className="mt-3 max-w-2xl text-sm text-navy-foreground/80 sm:text-base">
             A stoppage-time strike capped a second-half turnaround as the Blues
-            roared back in front of a sold-out crowd at The Bridge Stadium.
+            roared back in front of a sold-out crowd at Amahoro Stadium.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">

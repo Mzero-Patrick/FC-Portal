@@ -71,7 +71,7 @@ export function SiteFooter() {
             </div>
             <div className="leading-none">
               <div className="font-display text-2xl font-bold uppercase tracking-wide">
-                Stamford Blues
+                Rayon Sports
               </div>
               <div className="text-[10px] font-bold uppercase tracking-[0.35em] text-gold">
                 Football Club
@@ -79,8 +79,8 @@ export function SiteFooter() {
             </div>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-navy-foreground/70">
-            The official home of Stamford Blues FC. News, fixtures, tickets and
-            everything matchday at The Bridge Stadium.
+            The official home of Rayon Sports FC. News, fixtures, tickets and
+            everything matchday at Amahoro Stadium.
           </p>
           <div className="mt-5 flex items-center gap-2.5">
             {socials.map(({ label, icon: Icon }) => (
@@ -103,7 +103,7 @@ export function SiteFooter() {
 
       <div className="border-t border-navy-foreground/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 text-xs text-navy-foreground/60 sm:flex-row">
-          <p>© 2026 Stamford Blues FC. All rights reserved.</p>
+          <p>© 2026 Rayon Sports FC. All rights reserved.</p>
           <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2" aria-label="Legal">
             {legalLinks.map((label) => (
               <a
