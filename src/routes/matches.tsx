@@ -1,16 +1,25 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, Clock, MapPin, Shield, Ticket } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import {
+  AlertTriangle,
+  CalendarDays,
+  Clock,
+  Loader2,
+  MapPin,
+  Shield,
+  Ticket,
+} from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SponsorBanner } from "@/components/sponsor-banner";
+import { getLeagueData, findClubRow } from "@/lib/league.functions";
 import {
   clubName,
-  leagueStandings,
-  recentResults,
-  upcomingFixtures,
   type Fixture,
   type MatchResult,
+  type StandingRow,
 } from "@/lib/club-data";
 
 type Tab = "fixtures" | "results" | "standings";
@@ -20,6 +29,7 @@ const tabs: { id: Tab; label: string }[] = [
   { id: "results", label: "Results" },
   { id: "standings", label: "Standings" },
 ];
+
 
 export const Route = createFileRoute("/matches")({
   head: () => ({
