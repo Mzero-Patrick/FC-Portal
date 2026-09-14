@@ -72,11 +72,14 @@ export function SiteFooter() {
             everything matchday at Amahoro Stadium.
           </p>
           <div className="mt-5 flex items-center gap-2.5">
-            {socials.map(({ label, icon: Icon }) => (
+            {socialLinks.map(({ label, href, icon: Icon }) => (
               <a
                 key={label}
-                href="#"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={label}
+
                 className="grid h-9 w-9 place-items-center rounded-full border border-navy-foreground/20 text-navy-foreground/70 transition-colors hover:border-gold hover:bg-gold hover:text-gold-foreground"
               >
                 <Icon size={16} />
