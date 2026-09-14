@@ -3,15 +3,13 @@ import { Link } from "@tanstack/react-router";
 import {
   ChevronDown,
   ChevronRight,
-  Facebook,
-  Instagram,
   Menu,
   Shield,
   Ticket,
-  Twitter,
   X,
-  Youtube,
 } from "lucide-react";
+import { socialLinks } from "@/lib/social-links";
+
 
 type NavLink = { label: string; href: string; external?: boolean };
 

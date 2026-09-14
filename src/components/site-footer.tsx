@@ -1,10 +1,5 @@
-import {
-  Facebook,
-  Instagram,
-  Shield,
-  Twitter,
-  Youtube,
-} from "lucide-react";
+import { Shield } from "lucide-react";
+import { socialLinks } from "@/lib/social-links";
 
 const usefulLinks = ["Official App", "FAQs", "Contact Us", "Website Feedback"];
 
@@ -25,12 +20,6 @@ const legalLinks = [
   "Modern Slavery Statement",
 ];
 
-const socials = [
-  { label: "Facebook", icon: Facebook },
-  { label: "X (Twitter)", icon: Twitter },
-  { label: "Instagram", icon: Instagram },
-  { label: "YouTube", icon: Youtube },
-];
 
 function FooterColumn({
   title,
