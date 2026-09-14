@@ -109,19 +109,20 @@ export function SiteHeader() {
           </nav>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3 text-navy-foreground/70">
-              <a href="#" aria-label="Facebook" className="hover:text-gold">
-                <Facebook size={12} />
-              </a>
-              <a href="#" aria-label="X (Twitter)" className="hover:text-gold">
-                <Twitter size={12} />
-              </a>
-              <a href="#" aria-label="Instagram" className="hover:text-gold">
-                <Instagram size={12} />
-              </a>
-              <a href="#" aria-label="YouTube" className="hover:text-gold">
-                <Youtube size={12} />
-              </a>
+              {socialLinks.map(({ label, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="hover:text-gold"
+                >
+                  <Icon size={12} />
+                </a>
+              ))}
             </div>
+
             <span className="h-3 w-px bg-navy-foreground/20" />
             <Link
               to="/auth"
