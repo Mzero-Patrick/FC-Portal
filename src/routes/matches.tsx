@@ -270,6 +270,14 @@ function StandingsTable({ rows }: { rows: StandingRow[] }) {
 
 function MatchesPage() {
   const [activeTab, setActiveTab] = useState<Tab>("fixtures");
+  const fetchLeague = useServerFn(getLeagueData);
+  const { data, isPending, isError, refetch, isFetching } = useQuery({
+    queryKey: ["league-data"],
+    queryFn: () => fetchLeague(),
+    staleTime: 5 * 60_000,
+  });
+
+  const clubRow = data ? findClubRow(data.standings) : undefined;
 
   return (
     <div className="min-h-screen bg-background">
@@ -284,6 +292,32 @@ function MatchesPage() {
             <h1 className="mt-1 font-display text-3xl font-bold uppercase tracking-wide sm:text-4xl">
               Fixtures &amp; Results
             </h1>
+
+            {clubRow && (
+              <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {[
+                  { label: "Position", value: clubRow.pos },
+                  { label: "Points", value: clubRow.points },
+                  { label: "Played", value: clubRow.played },
+                  {
+                    label: "Goal diff",
+                    value: clubRow.gd > 0 ? `+${clubRow.gd}` : clubRow.gd,
+                  },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-lg bg-navy-foreground/10 px-4 py-3"
+                  >
+                    <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold">
+                      {stat.label}
+                    </dt>
+                    <dd className="font-display text-2xl font-bold leading-tight">
+                      {stat.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            )}
 
             {/* Filter tabs */}
             <div
@@ -313,23 +347,67 @@ function MatchesPage() {
 
         {/* Tab content */}
         <section className="mx-auto max-w-5xl px-4 py-10">
-          {activeTab === "fixtures" && (
-            <div className="grid gap-4 sm:grid-cols-2">
-              {upcomingFixtures.map((fixture) => (
-                <FixtureRow key={fixture.id} fixture={fixture} />
-              ))}
+          {isPending && (
+            <div
+              className="flex items-center justify-center gap-3 rounded-xl border border-border bg-card py-16 text-sm text-muted-foreground"
+              role="status"
+            >
+              <Loader2 className="h-5 w-5 animate-spin text-primary" />
+              Loading the latest league data…
             </div>
           )}
 
-          {activeTab === "results" && (
-            <div className="grid gap-4 sm:grid-cols-2">
-              {recentResults.map((result) => (
-                <ResultRow key={result.id} result={result} />
-              ))}
+          {isError && (
+            <div
+              className="flex flex-col items-center gap-3 rounded-xl border border-border bg-card py-14 text-center"
+              role="alert"
+            >
+              <AlertTriangle className="h-6 w-6 text-loss" />
+              <p className="text-sm text-muted-foreground">
+                We couldn&apos;t load the league data right now.
+              </p>
+              <button
+                type="button"
+                onClick={() => refetch()}
+                className="rounded-md bg-primary px-4 py-2 text-sm font-bold uppercase tracking-wide text-primary-foreground"
+              >
+                Try again
+              </button>
             </div>
           )}
 
-          {activeTab === "standings" && <StandingsTable />}
+          {data && (
+            <>
+              {data.notice && (
+                <p className="mb-6 rounded-lg border border-border bg-secondary/50 px-4 py-3 text-center text-xs text-muted-foreground">
+                  {data.notice}
+                </p>
+              )}
+
+              {activeTab === "fixtures" && (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {data.fixtures.map((fixture) => (
+                    <FixtureRow key={fixture.id} fixture={fixture} />
+                  ))}
+                </div>
+              )}
+
+              {activeTab === "results" && (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {data.results.map((result) => (
+                    <ResultRow key={result.id} result={result} />
+                  ))}
+                </div>
+              )}
+
+              {activeTab === "standings" && <StandingsTable rows={data.standings} />}
+
+              <p className="mt-6 text-center text-xs text-muted-foreground">
+                {data.live ? "Live league data" : "Stored league data"}
+                {isFetching ? " · refreshing…" : ""}
+              </p>
+            </>
+          )}
 
           <p className="mt-8 text-center text-sm text-muted-foreground">
             Looking for tickets?{" "}
@@ -341,6 +419,7 @@ function MatchesPage() {
               Visit Tickets &amp; Hospitality
             </Link>
           </p>
+
         </section>
       </main>
       <SponsorBanner />
