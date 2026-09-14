@@ -204,7 +204,7 @@ function ResultRow({ result }: { result: MatchResult }) {
   );
 }
 
-function StandingsTable() {
+function StandingsTable({ rows }: { rows: StandingRow[] }) {
   return (
     <div className="overflow-x-auto rounded-xl border border-border bg-card shadow-sm">
       <table className="w-full min-w-[560px] text-sm">
@@ -223,15 +223,16 @@ function StandingsTable() {
           </tr>
         </thead>
         <tbody>
-          {leagueStandings.map((row) => {
-            const isClub = row.team === clubName;
+          {rows.map((row) => {
+            const isClub = row.team.toLowerCase().includes("rayon");
             return (
               <tr
-                key={row.pos}
+                key={`${row.pos}-${row.team}`}
                 className={`border-b border-border/60 last:border-0 ${
                   isClub ? "bg-primary/5 font-semibold" : ""
                 }`}
               >
+
                 <td className="px-4 py-3 text-muted-foreground">{row.pos}</td>
                 <td className="px-4 py-3">
                   <span className="flex items-center gap-2">
