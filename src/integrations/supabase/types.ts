@@ -14,7 +14,172 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      rewards: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          order_id: string | null
+          prize: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          order_id?: string | null
+          prize: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          order_id?: string | null
+          prize?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rewards_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "ticket_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ticket_orders: {
+        Row: {
+          created_at: string
+          id: string
+          match_date: string
+          match_id: string
+          match_label: string
+          payment_method: string
+          spin_used: boolean
+          status: string
+          total_rwf: number
+          user_id: string
+          venue: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          match_date: string
+          match_id: string
+          match_label: string
+          payment_method: string
+          spin_used?: boolean
+          status?: string
+          total_rwf: number
+          user_id: string
+          venue: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          match_date?: string
+          match_id?: string
+          match_label?: string
+          payment_method?: string
+          spin_used?: boolean
+          status?: string
+          total_rwf?: number
+          user_id?: string
+          venue?: string
+        }
+        Relationships: []
+      }
+      tickets: {
+        Row: {
+          created_at: string
+          holder_email: string
+          holder_name: string
+          id: string
+          match_date: string
+          match_id: string
+          match_label: string
+          order_id: string
+          price_rwf: number
+          reference: string
+          seat_label: string
+          sector_id: string
+          sector_name: string
+          status: string
+          user_id: string
+          venue: string
+        }
+        Insert: {
+          created_at?: string
+          holder_email: string
+          holder_name: string
+          id?: string
+          match_date: string
+          match_id: string
+          match_label: string
+          order_id: string
+          price_rwf: number
+          reference: string
+          seat_label: string
+          sector_id: string
+          sector_name: string
+          status?: string
+          user_id: string
+          venue: string
+        }
+        Update: {
+          created_at?: string
+          holder_email?: string
+          holder_name?: string
+          id?: string
+          match_date?: string
+          match_id?: string
+          match_label?: string
+          order_id?: string
+          price_rwf?: number
+          reference?: string
+          seat_label?: string
+          sector_id?: string
+          sector_name?: string
+          status?: string
+          user_id?: string
+          venue?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tickets_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "ticket_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
