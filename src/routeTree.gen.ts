@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CareersRouteImport } from './routes/careers'
@@ -18,6 +19,8 @@ import { Route as FansRouteImport } from './routes/fans'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as MatchesRouteImport } from './routes/matches'
 import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as TicketsRouteImport } from './routes/tickets'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as TeamsJuniorsRouteImport } from './routes/teams.juniors'
 import { Route as TeamsMenRouteImport } from './routes/teams.men'
 import { Route as TeamsWomenRouteImport } from './routes/teams.women'
@@ -25,6 +28,10 @@ import { Route as TeamsWomenRouteImport } from './routes/teams.women'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -67,6 +74,16 @@ const PartnersRoute = PartnersRouteImport.update({
   path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TicketsRoute = TicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const TeamsJuniorsRoute = TeamsJuniorsRouteImport.update({
   id: '/teams/juniors',
   path: '/teams/juniors',
@@ -93,6 +110,8 @@ export interface FileRoutesByFullPath {
   '/history': typeof HistoryRoute
   '/matches': typeof MatchesRoute
   '/partners': typeof PartnersRoute
+  '/tickets': typeof TicketsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
   '/teams/juniors': typeof TeamsJuniorsRoute
   '/teams/men': typeof TeamsMenRoute
   '/teams/women': typeof TeamsWomenRoute
@@ -107,6 +126,8 @@ export interface FileRoutesByTo {
   '/history': typeof HistoryRoute
   '/matches': typeof MatchesRoute
   '/partners': typeof PartnersRoute
+  '/tickets': typeof TicketsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
   '/teams/juniors': typeof TeamsJuniorsRoute
   '/teams/men': typeof TeamsMenRoute
   '/teams/women': typeof TeamsWomenRoute
@@ -114,6 +135,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/careers': typeof CareersRoute
@@ -122,6 +144,8 @@ export interface FileRoutesById {
   '/history': typeof HistoryRoute
   '/matches': typeof MatchesRoute
   '/partners': typeof PartnersRoute
+  '/tickets': typeof TicketsRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/teams/juniors': typeof TeamsJuniorsRoute
   '/teams/men': typeof TeamsMenRoute
   '/teams/women': typeof TeamsWomenRoute
@@ -138,6 +162,8 @@ export interface FileRouteTypes {
     | '/history'
     | '/matches'
     | '/partners'
+    | '/tickets'
+    | '/dashboard'
     | '/teams/juniors'
     | '/teams/men'
     | '/teams/women'
@@ -152,12 +178,15 @@ export interface FileRouteTypes {
     | '/history'
     | '/matches'
     | '/partners'
+    | '/tickets'
+    | '/dashboard'
     | '/teams/juniors'
     | '/teams/men'
     | '/teams/women'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
     | '/auth'
     | '/careers'
@@ -166,6 +195,8 @@ export interface FileRouteTypes {
     | '/history'
     | '/matches'
     | '/partners'
+    | '/tickets'
+    | '/_authenticated/dashboard'
     | '/teams/juniors'
     | '/teams/men'
     | '/teams/women'
@@ -173,6 +204,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   CareersRoute: typeof CareersRoute
@@ -181,6 +213,7 @@ export interface RootRouteChildren {
   HistoryRoute: typeof HistoryRoute
   MatchesRoute: typeof MatchesRoute
   PartnersRoute: typeof PartnersRoute
+  TicketsRoute: typeof TicketsRoute
   TeamsJuniorsRoute: typeof TeamsJuniorsRoute
   TeamsMenRoute: typeof TeamsMenRoute
   TeamsWomenRoute: typeof TeamsWomenRoute
@@ -193,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -251,6 +291,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tickets': {
+      id: '/tickets'
+      path: '/tickets'
+      fullPath: '/tickets'
+      preLoaderRoute: typeof TicketsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/teams/juniors': {
       id: '/teams/juniors'
       path: '/teams/juniors'
@@ -275,8 +329,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   CareersRoute: CareersRoute,
@@ -285,6 +351,7 @@ const rootRouteChildren: RootRouteChildren = {
   HistoryRoute: HistoryRoute,
   MatchesRoute: MatchesRoute,
   PartnersRoute: PartnersRoute,
+  TicketsRoute: TicketsRoute,
   TeamsJuniorsRoute: TeamsJuniorsRoute,
   TeamsMenRoute: TeamsMenRoute,
   TeamsWomenRoute: TeamsWomenRoute,
