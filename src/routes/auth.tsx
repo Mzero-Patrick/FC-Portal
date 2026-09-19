@@ -1,12 +1,19 @@
 import { useState } from "react";
-import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
-import { Eye, EyeOff, Lock, Mail, Shield, User } from "lucide-react";
+import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
+import { Eye, EyeOff, Loader2, Lock, Mail, Shield, User } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-type AuthSearch = { mode?: "login" | "register" };
+type AuthSearch = { mode?: "login" | "register"; redirect?: string };
+
+const safePath = (value: unknown) =>
+  typeof value === "string" && value.startsWith("/") && !value.startsWith("//")
+    ? value
+    : undefined;
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): AuthSearch => ({
     mode: search["mode"] === "register" ? "register" : "login",
+    ...(safePath(search["redirect"]) ? { redirect: safePath(search["redirect"])! } : {}),
   }),
   head: () => ({
     meta: [
@@ -14,7 +21,7 @@ export const Route = createFileRoute("/auth")({
       {
         name: "description",
         content:
-          "Access your Rayon Sports FC supporter account to manage tickets, membership and club updates, or create a new account.",
+          "Access your Rayon Sports FC supporter account to buy tickets, manage membership and club updates, or create a new account.",
       },
       { property: "og:title", content: "Sign In or Register — Rayon Sports FC" },
       {
@@ -91,6 +98,7 @@ function Field({
 
 function AuthPage() {
   const search = useSearch({ from: "/auth" });
+  const navigate = useNavigate();
   const [mode, setMode] = useState<"login" | "register">(search.mode ?? "login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -98,9 +106,18 @@ function AuthPage() {
   const [confirm, setConfirm] = useState("");
   const [agree, setAgree] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const destination = search.redirect ?? "/dashboard";
+
+  const goOn = () => {
+    navigate({ to: destination, replace: true });
+  };
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setMessage(null);
+
     if (mode === "register") {
       if (password !== confirm) {
         setMessage("Passwords do not match.");
@@ -110,10 +127,49 @@ function AuthPage() {
         setMessage("Please accept the terms to continue.");
         return;
       }
-      setMessage("Account details captured. Accounts go live once the club portal is connected.");
+      setBusy(true);
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}${destination}`,
+          data: { full_name: name },
+        },
+      });
+      setBusy(false);
+      if (error) {
+        setMessage(error.message);
+        return;
+      }
+      if (data.session) {
+        goOn();
+        return;
+      }
+      setMessage("Check your email to confirm your account, then sign in.");
       return;
     }
-    setMessage("Sign-in captured. Accounts go live once the club portal is connected.");
+
+    setBusy(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setBusy(false);
+    if (error) {
+      setMessage(error.message);
+      return;
+    }
+    goOn();
+  };
+
+  const forgotPassword = async () => {
+    if (!email) {
+      setMessage("Enter your email address first, then tap Forgot password.");
+      return;
+    }
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setMessage(
+      error ? error.message : "Password reset link sent — check your inbox.",
+    );
   };
 
   return (
@@ -135,8 +191,8 @@ function AuthPage() {
             One account.
           </h2>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-navy-foreground/70">
-            Manage tickets, membership and supporter club details from a single
-            Gikundiro account.
+            Buy matchday tickets, keep your QR codes and claim supporter rewards
+            from a single Gikundiro account.
           </p>
         </div>
         <p className="text-xs text-navy-foreground/50">
@@ -240,9 +296,13 @@ function AuthPage() {
                   />
                   Remember me
                 </label>
-                <a href="#" className="font-semibold text-primary hover:underline">
+                <button
+                  type="button"
+                  onClick={forgotPassword}
+                  className="font-semibold text-primary hover:underline"
+                >
                   Forgot password?
-                </a>
+                </button>
               </div>
             ) : (
               <label className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -264,8 +324,10 @@ function AuthPage() {
 
             <button
               type="submit"
-              className="w-full rounded-md bg-primary py-3 text-sm font-bold uppercase tracking-wide text-primary-foreground transition-colors hover:bg-primary/90"
+              disabled={busy}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary py-3 text-sm font-bold uppercase tracking-wide text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60"
             >
+              {busy && <Loader2 className="h-4 w-4 animate-spin" />}
               {mode === "login" ? "Sign In" : "Create Account"}
             </button>
           </form>

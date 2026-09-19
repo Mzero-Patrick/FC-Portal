@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   ChevronDown,
   ChevronRight,
@@ -9,13 +10,14 @@ import {
   X,
 } from "lucide-react";
 import { socialLinks } from "@/lib/social-links";
+import { useAuth } from "@/hooks/use-auth";
+import { supabase } from "@/integrations/supabase/client";
 
 
 type NavLink = { label: string; href: string; external?: boolean };
 
 const primaryNav: NavLink[] = [
   { label: "News", href: "/#news" },
-  { label: "Tickets & Hospitality", href: "/#tickets" },
   {
     label: "Rayon Plus",
     href: "https://www.rayonplus.rw/",
@@ -88,6 +90,16 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [mobileTeamsOpen, setMobileTeamsOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const signOut = async () => {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", search: { mode: "login" }, replace: true });
+  };
 
   return (
     <header id="top" className="sticky top-0 z-50">
@@ -122,20 +134,40 @@ export function SiteHeader() {
             </div>
 
             <span className="h-3 w-px bg-navy-foreground/20" />
-            <Link
-              to="/auth"
-              search={{ mode: "login" }}
-              className="text-navy-foreground/70 hover:text-gold"
-            >
-              Login
-            </Link>
-            <Link
-              to="/auth"
-              search={{ mode: "register" }}
-              className="font-semibold text-gold hover:text-gold/80"
-            >
-              Register
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="font-semibold text-gold hover:text-gold/80"
+                >
+                  My Tickets
+                </Link>
+                <button
+                  type="button"
+                  onClick={signOut}
+                  className="text-navy-foreground/70 hover:text-gold"
+                >
+                  Sign out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/auth"
+                  search={{ mode: "login" }}
+                  className="text-navy-foreground/70 hover:text-gold"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/auth"
+                  search={{ mode: "register" }}
+                  className="font-semibold text-gold hover:text-gold/80"
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -218,6 +250,14 @@ export function SiteHeader() {
               </div>
             </div>
 
+            <Link
+              to="/tickets"
+              activeProps={{ className: "border-gold text-primary" }}
+              className="border-b-2 border-transparent px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:border-gold hover:text-primary"
+            >
+              Tickets &amp; Hospitality
+            </Link>
+
             {primaryNav.map((item) => (
               <a
                 key={item.label}
@@ -280,13 +320,13 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <a
-              href="#tickets"
+            <Link
+              to="/tickets"
               className="hidden items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex"
             >
               <Ticket size={16} />
               Buy Tickets
-            </a>
+            </Link>
             <button
               type="button"
               className="grid h-10 w-10 place-items-center rounded-md border border-border text-foreground lg:hidden"
@@ -361,6 +401,14 @@ export function SiteHeader() {
               </div>
             )}
 
+            <Link
+              to="/tickets"
+              onClick={() => setMobileOpen(false)}
+              className="block border-b border-border/60 py-3 text-sm font-semibold text-foreground"
+            >
+              Tickets &amp; Hospitality
+            </Link>
+
             {primaryNav.map((item) => (
               <a
                 key={item.label}
@@ -422,32 +470,56 @@ export function SiteHeader() {
               </div>
             )}
 
-            <a
-              href="#tickets"
+            <Link
+              to="/tickets"
               onClick={() => setMobileOpen(false)}
               className="mt-4 flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground"
             >
               <Ticket size={16} />
               Buy Tickets
-            </a>
+            </Link>
 
             <div className="mt-3 grid grid-cols-2 gap-2">
-              <Link
-                to="/auth"
-                search={{ mode: "login" }}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md border border-border py-3 text-center text-sm font-semibold text-foreground"
-              >
-                Login
-              </Link>
-              <Link
-                to="/auth"
-                search={{ mode: "register" }}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md bg-navy-deep py-3 text-center text-sm font-semibold text-navy-foreground"
-              >
-                Register
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setMobileOpen(false)}
+                    className="rounded-md border border-border py-3 text-center text-sm font-semibold text-foreground"
+                  >
+                    My Tickets
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileOpen(false);
+                      void signOut();
+                    }}
+                    className="rounded-md bg-navy-deep py-3 text-center text-sm font-semibold text-navy-foreground"
+                  >
+                    Sign out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/auth"
+                    search={{ mode: "login" }}
+                    onClick={() => setMobileOpen(false)}
+                    className="rounded-md border border-border py-3 text-center text-sm font-semibold text-foreground"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/auth"
+                    search={{ mode: "register" }}
+                    onClick={() => setMobileOpen(false)}
+                    className="rounded-md bg-navy-deep py-3 text-center text-sm font-semibold text-navy-foreground"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           </nav>
         )}
