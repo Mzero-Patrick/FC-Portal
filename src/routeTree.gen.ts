@@ -19,6 +19,7 @@ import { Route as FansRouteImport } from './routes/fans'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as MatchesRouteImport } from './routes/matches'
 import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as TicketsRouteImport } from './routes/tickets'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as TeamsJuniorsRouteImport } from './routes/teams.juniors'
@@ -74,6 +75,11 @@ const PartnersRoute = PartnersRouteImport.update({
   path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TicketsRoute = TicketsRouteImport.update({
   id: '/tickets',
   path: '/tickets',
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/history': typeof HistoryRoute
   '/matches': typeof MatchesRoute
   '/partners': typeof PartnersRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/tickets': typeof TicketsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/teams/juniors': typeof TeamsJuniorsRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/history': typeof HistoryRoute
   '/matches': typeof MatchesRoute
   '/partners': typeof PartnersRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/tickets': typeof TicketsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/teams/juniors': typeof TeamsJuniorsRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/history': typeof HistoryRoute
   '/matches': typeof MatchesRoute
   '/partners': typeof PartnersRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/tickets': typeof TicketsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/teams/juniors': typeof TeamsJuniorsRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/history'
     | '/matches'
     | '/partners'
+    | '/reset-password'
     | '/tickets'
     | '/dashboard'
     | '/teams/juniors'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/history'
     | '/matches'
     | '/partners'
+    | '/reset-password'
     | '/tickets'
     | '/dashboard'
     | '/teams/juniors'
@@ -195,6 +206,7 @@ export interface FileRouteTypes {
     | '/history'
     | '/matches'
     | '/partners'
+    | '/reset-password'
     | '/tickets'
     | '/_authenticated/dashboard'
     | '/teams/juniors'
@@ -213,6 +225,7 @@ export interface RootRouteChildren {
   HistoryRoute: typeof HistoryRoute
   MatchesRoute: typeof MatchesRoute
   PartnersRoute: typeof PartnersRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   TicketsRoute: typeof TicketsRoute
   TeamsJuniorsRoute: typeof TeamsJuniorsRoute
   TeamsMenRoute: typeof TeamsMenRoute
@@ -291,6 +304,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tickets': {
       id: '/tickets'
       path: '/tickets'
@@ -351,6 +371,7 @@ const rootRouteChildren: RootRouteChildren = {
   HistoryRoute: HistoryRoute,
   MatchesRoute: MatchesRoute,
   PartnersRoute: PartnersRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   TicketsRoute: TicketsRoute,
   TeamsJuniorsRoute: TeamsJuniorsRoute,
   TeamsMenRoute: TeamsMenRoute,
