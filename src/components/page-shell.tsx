@@ -21,7 +21,7 @@ export function PageHero({
 }: {
   eyebrow: string;
   title: string;
-  intro?: string;
+  intro?: string | undefined;
 }) {
   return (
     <section className="bg-navy-deep py-10 text-navy-foreground sm:py-14">
