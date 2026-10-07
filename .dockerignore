@@ -1,0 +1,33 @@
+# Keep the build context small and free of local or secret files.
+
+# Dependencies and build output (rebuilt inside the image)
+node_modules
+.output
+dist
+dist-ssr
+.nitro
+.tanstack
+.vinxi
+.wrangler
+
+# Environment files: values reach the image only through build args and
+# docker-compose's env_file, never by being copied in.
+.env
+.env.*
+*.local
+.dev.vars
+
+# Git, editors, tooling
+.git
+.github
+.vscode
+.idea
+.lovable
+.claude
+*.log
+.DS_Store
+
+# Docker files themselves
+Dockerfile
+docker-compose*.yml
+.dockerignore
