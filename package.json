@@ -1,5 +1,7 @@
 {
-  "name": "tanstack_start_ts",
+  "name": "rayon-sports-fc",
+  "description": "Official web platform of Rayon Sports FC.",
+  "version": "1.0.0",
   "private": true,
   "sideEffects": false,
   "type": "module",
