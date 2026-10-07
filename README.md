@@ -1,36 +1,49 @@
-# Stadium Spark
+# Rayon Sports FC — Official Web Platform
 
-Build a responsive football club website built with React, Tailwind CSS, and Lucide icons based on the structural layout of Chelsea FC.
+The official website of Rayon Sports FC: club news, fixtures and results, squads
+(men, women and juniors), matchday ticketing with fan rewards, and club history.
 
-Include:
+## Tech stack
 
-Top Header & Main Navigation: Logo placeholder, top bar for secondary links, and a main menu featuring: Home, Teams, Matches/Fixtures, News, Tickets & Hospitality, and a "More" dropdown.
+- [TanStack Start](https://tanstack.com/start) (React 19, file-based routing, SSR)
+- [Vite](https://vite.dev) and [Tailwind CSS v4](https://tailwindcss.com)
+- [Supabase](https://supabase.com) for auth and data, with [Drizzle](https://orm.drizzle.team) migrations
+- [Radix UI](https://www.radix-ui.com) primitives and [Lucide](https://lucide.dev) icons
 
-Hero Section: Large featured news banner with a bold image overlay and "Latest Club News" badge.
+## Getting started
 
-Match Center Section: Horizontal scrollable card list for Recent Results and Upcoming Fixtures with score indicators.
-
-Footer: Multi-column layout containing "Useful Links", legal notices, and social media links.
-
-Use modern Tailwind spacing, dark blue/white theme accents, and fully responsive layouts.
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/6dda12cb-4170-4578-b0be-8c5fa7db267f).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Requires Node.js 22+ and [Bun](https://bun.sh) (npm also works).
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+git clone https://github.com/Mzero-Patrick/stadium-central.git
+cd stadium-central
+bun install
+bun run dev
 ```
+
+The Supabase connection is read from `.env` (`VITE_SUPABASE_URL`,
+`VITE_SUPABASE_PUBLISHABLE_KEY`, and the server-side equivalents).
+
+## Scripts
+
+| Command           | Description                  |
+| ----------------- | ---------------------------- |
+| `bun run dev`     | Start the dev server         |
+| `bun run build`   | Production build             |
+| `bun run preview` | Preview the production build |
+| `bun run lint`    | Lint with ESLint             |
+| `bun run format`  | Format with Prettier         |
+
+## Project structure
+
+```
+src/
+  routes/        Pages (file-based routing)
+  components/    Site sections, ticketing and UI components
+  lib/           Club data, server functions and utilities
+  integrations/  Supabase clients and auth middleware
+drizzle/         Database schema and migrations
+public/          Static assets (favicon, robots.txt)
+```
+
+© Rayon Sports FC. All rights reserved.
