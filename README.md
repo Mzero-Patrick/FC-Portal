@@ -24,6 +24,11 @@ bun run dev
 The Supabase connection is read from `.env` (`VITE_SUPABASE_URL`,
 `VITE_SUPABASE_PUBLISHABLE_KEY`, and the server-side equivalents).
 
+## Docker
+
+Run the production build in a container with `docker compose up -d --build`,
+then open http://localhost:3000. See [docs/DOCKER.md](docs/DOCKER.md).
+
 ## Scripts
 
 | Command           | Description                  |

@@ -1,0 +1,44 @@
+# Rayon Sports FC web platform: run it with `docker compose up -d --build`
+# and open http://localhost:3000
+#
+# Where the data lives: rosters, fixtures, tickets, fan rewards and user
+# accounts are stored in the club's Supabase project (Postgres + Auth +
+# Storage) on Lovable Cloud, not inside this container. The container is
+# stateless, so stopping, rebuilding or deleting it never loses data.
+
+services:
+  web:
+    build:
+      context: .
+      # Public values baked into the browser bundle, read from .env.
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_PUBLISHABLE_KEY: ${VITE_SUPABASE_PUBLISHABLE_KEY}
+        VITE_SUPABASE_PROJECT_ID: ${VITE_SUPABASE_PROJECT_ID}
+    image: rayon-sports-fc:latest
+    container_name: rayon-sports-fc
+    restart: unless-stopped
+
+    # host:container. Change the left number if port 3000 is already taken.
+    ports:
+      - "${APP_PORT:-3000}:3000"
+
+    # Server-side settings, read when the container starts.
+    env_file:
+      - path: .env # Supabase URL and publishable key (committed)
+        required: true
+      - path: .env.local # Your private secrets, e.g. SUPABASE_SERVICE_ROLE_KEY
+        required: false #   and API_FOOTBALL_KEY. Gitignored; create it yourself.
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+
+    # No volumes are needed today: the app keeps no files on its own disk.
+    # If you later add local files the app must keep (uploads, a SQLite file,
+    # JSON datasets), mount a named volume and point the app at /app/data:
+    #
+    # volumes:
+    #   - club-data:/app/data
+
+# volumes:
+#   club-data:
