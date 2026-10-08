@@ -26,7 +26,7 @@ The Supabase connection is read from `.env` (`VITE_SUPABASE_URL`,
 
 ## Hosting
 
-The site is hosted on Render. See [docs/RENDER.md](docs/RENDER.md) for setup.
+The site is hosted on Vercel with its own Supabase database. See [docs/VERCEL.md](docs/VERCEL.md) for setup.
 
 ## Scripts
 
