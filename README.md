@@ -24,6 +24,10 @@ bun run dev
 The Supabase connection is read from `.env` (`VITE_SUPABASE_URL`,
 `VITE_SUPABASE_PUBLISHABLE_KEY`, and the server-side equivalents).
 
+## Hosting
+
+The site is hosted on Render. See [docs/RENDER.md](docs/RENDER.md) for setup.
+
 ## Scripts
 
 | Command           | Description                  |
