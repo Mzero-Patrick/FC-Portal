@@ -5,13 +5,13 @@ import {
   ChevronDown,
   ChevronRight,
   Menu,
-  Shield,
   Ticket,
   X,
 } from "lucide-react";
 import { socialLinks } from "@/lib/social-links";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
+import { ClubLogo } from "@/components/club-logo";
 
 
 type NavLink = { label: string; href: string; external?: boolean };
@@ -74,17 +74,6 @@ const moreNav: MoreEntry[] = [
 
 const topBarLinks = ["Club Charter", "Contact Us", "Shop", "My Account"];
 
-
-function Crest({ className = "h-10 w-10" }: { className?: string }) {
-  return (
-    <div
-      className={`grid shrink-0 place-items-center rounded-full bg-primary text-primary-foreground ${className}`}
-      aria-hidden="true"
-    >
-      <Shield className="h-1/2 w-1/2" fill="currentColor" strokeWidth={1} />
-    </div>
-  );
-}
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -175,9 +164,9 @@ export function SiteHeader() {
       {/* Main navigation bar */}
       <div className="border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/90">
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:flex sm:justify-between">
-          {/* Logo placeholder */}
+          {/* Club crest */}
           <Link to="/" className="flex min-w-0 items-center gap-3">
-            <Crest />
+            <ClubLogo className="h-11 w-11" />
             <div className="min-w-0 leading-none">
               <div className="truncate font-display text-2xl font-bold uppercase tracking-wide text-foreground">
                 Rayon Sports

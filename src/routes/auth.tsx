@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { Eye, EyeOff, Loader2, Lock, Mail, Shield, User } from "lucide-react";
+import { Eye, EyeOff, Loader2, Lock, Mail, User } from "lucide-react";
+import { ClubLogo } from "@/components/club-logo";
 import { supabase } from "@/integrations/supabase/client";
 
 type AuthSearch = { mode?: "login" | "register"; redirect?: string };
@@ -177,9 +178,7 @@ function AuthPage() {
       {/* Brand panel */}
       <div className="hidden flex-col justify-between bg-navy p-12 text-navy-foreground lg:flex">
         <Link to="/" className="flex items-center gap-3">
-          <span className="grid h-12 w-12 place-items-center rounded-full bg-primary text-primary-foreground">
-            <Shield className="h-6 w-6" fill="currentColor" strokeWidth={1} />
-          </span>
+          <ClubLogo className="h-14 w-14" />
           <span className="font-display text-2xl font-bold uppercase tracking-wide">
             Rayon Sports FC
           </span>
@@ -204,9 +203,7 @@ function AuthPage() {
       <div className="flex items-center justify-center bg-background px-4 py-12 sm:px-8">
         <div className="w-full max-w-md">
           <Link to="/" className="mb-8 flex items-center gap-3 lg:hidden">
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-primary text-primary-foreground">
-              <Shield className="h-5 w-5" fill="currentColor" strokeWidth={1} />
-            </span>
+            <ClubLogo className="h-12 w-12" />
             <span className="font-display text-xl font-bold uppercase text-foreground">
               Rayon Sports FC
             </span>

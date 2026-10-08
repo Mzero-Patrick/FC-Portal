@@ -1,4 +1,4 @@
-import { Shield } from "lucide-react";
+import { ClubLogo } from "@/components/club-logo";
 import { socialLinks } from "@/lib/social-links";
 
 const usefulLinks = ["Official App", "FAQs", "Contact Us", "Website Feedback"];
@@ -55,9 +55,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gold text-gold-foreground">
-              <Shield className="h-5 w-5" fill="currentColor" strokeWidth={1} />
-            </div>
+            <ClubLogo className="h-12 w-12" />
             <div className="leading-none">
               <div className="font-display text-2xl font-bold uppercase tracking-wide">
                 Rayon Sports
@@ -95,7 +93,20 @@ export function SiteFooter() {
 
       <div className="border-t border-navy-foreground/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 text-xs text-navy-foreground/60 sm:flex-row">
-          <p>© 2026 Rayon Sports FC. All rights reserved.</p>
+          <div className="flex flex-col items-center gap-1 sm:items-start">
+            <p>© 2026 Rayon Sports FC. All rights reserved.</p>
+            <p>
+              Built by{" "}
+              <a
+                href="https://patrick-portfolio-dnfd6wad6-m-zero-patrick-s-projects.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-gold transition-colors hover:text-navy-foreground"
+              >
+                ManiTech
+              </a>
+            </p>
+          </div>
           <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2" aria-label="Legal">
             {legalLinks.map((label) => (
               <a
