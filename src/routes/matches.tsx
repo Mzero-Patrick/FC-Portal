@@ -21,6 +21,7 @@ import {
   type MatchResult,
   type StandingRow,
 } from "@/lib/club-data";
+import { ClubLogo } from "@/components/club-logo";
 
 type Tab = "fixtures" | "results" | "standings";
 
@@ -58,13 +59,11 @@ export const Route = createFileRoute("/matches")({
 });
 
 function MiniCrest({ highlighted = false }: { highlighted?: boolean }) {
+  // Rayon Sports gets its official crest; opponents keep a neutral badge.
+  if (highlighted) return <ClubLogo className="h-10 w-10" />;
   return (
     <div
-      className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${
-        highlighted
-          ? "bg-primary text-primary-foreground"
-          : "bg-secondary text-muted-foreground"
-      }`}
+      className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-secondary text-muted-foreground"
       aria-hidden="true"
     >
       <Shield className="h-1/2 w-1/2" fill="currentColor" strokeWidth={1} />
@@ -236,12 +235,16 @@ function StandingsTable({ rows }: { rows: StandingRow[] }) {
                 <td className="px-4 py-3 text-muted-foreground">{row.pos}</td>
                 <td className="px-4 py-3">
                   <span className="flex items-center gap-2">
-                    <Shield
-                      size={14}
-                      className={isClub ? "text-primary" : "text-muted-foreground"}
-                      fill="currentColor"
-                      strokeWidth={1}
-                    />
+                    {isClub ? (
+                      <ClubLogo className="h-4 w-4" />
+                    ) : (
+                      <Shield
+                        size={14}
+                        className="text-muted-foreground"
+                        fill="currentColor"
+                        strokeWidth={1}
+                      />
+                    )}
                     <span className={isClub ? "text-foreground" : "text-muted-foreground"}>
                       {row.team}
                     </span>

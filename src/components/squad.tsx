@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Shield, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { CLUB_LOGO_SRC } from "@/components/club-logo";
 import { positionOrder, type Player, type Squad } from "@/lib/squad-data";
 
 function PlayerPortrait({
@@ -20,10 +21,10 @@ function PlayerPortrait({
       className={`relative grid place-items-center overflow-hidden bg-gradient-to-b from-navy to-navy-deep text-navy-foreground ${className}`}
       aria-hidden="true"
     >
-      <Shield
-        className="absolute h-32 w-32 text-navy-foreground/5"
-        fill="currentColor"
-        strokeWidth={0.5}
+      <img
+        src={CLUB_LOGO_SRC}
+        alt=""
+        className="absolute h-32 w-32 object-contain opacity-10"
       />
       <span className="relative font-display text-4xl font-bold tracking-wide">
         {initials}
