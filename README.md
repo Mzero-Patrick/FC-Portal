@@ -24,6 +24,10 @@ bun run dev
 The Supabase connection is read from `.env` (`VITE_SUPABASE_URL`,
 `VITE_SUPABASE_PUBLISHABLE_KEY`, and the server-side equivalents).
 
+## Hosting
+
+The site is hosted on Vercel with its own Supabase database. See [docs/VERCEL.md](docs/VERCEL.md) for setup.
+
 ## Scripts
 
 | Command           | Description                  |
